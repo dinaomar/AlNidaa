@@ -3,4 +3,8 @@
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="instruction1">ركّب الكَلِماتِ التَّالية لتُشَكِّل</string>
+    <string name="instruction2">جملة أسلوب النِّداء،</string>
+    <string name="instruction3"> ثُمّ اختر نوع النِّداء</string>
+
 </resources>

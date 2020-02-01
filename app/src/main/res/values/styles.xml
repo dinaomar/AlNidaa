@@ -8,4 +8,10 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="textViewQuestion" parent="TextAppearance.AppCompat">
+        <item name="android:fontFamily">@font/font</item>
+        <item name="android:textColor">@android:color/holo_red_dark</item>
+        <item name="android:textSize">20sp</item>
+    </style>
+
 </resources>
