@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    android:padding="20dp"
+    tools:context=".fragments.QuestionsFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <RelativeLayout
+                android:id="@+id/wordOne"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/choicebox">
+
+                <TextView
+                    style="@style/textViewSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="أَقَرطُوس" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <RelativeLayout
+                android:id="@+id/wordTwo"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/choicebox">
+
+                <TextView
+                    style="@style/textViewSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="سَلِّم" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <RelativeLayout
+                android:id="@+id/wordThree"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/choicebox">
+
+                <TextView
+                    style="@style/textViewSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="على" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/wordFour"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/choicebox">
+
+                <TextView
+                    style="@style/textViewSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="الأَصْدِقَاءِ" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+
+            <RelativeLayout
+                android:id="@+id/wordFive"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/choicebox">
+
+                <TextView
+                    style="@style/textViewSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="لِنَبدَأَ" />
+
+            </RelativeLayout>
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="0dp" />
+
+            <RelativeLayout
+                android:id="@+id/wordSix"
+                android:layout_width="100dp"
+                android:layout_height="50dp"
+                android:background="@drawable/choicebox">
+
+                <TextView
+                    style="@style/textViewSentence"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="اللُّعبَةَ" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lines" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lines" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lines" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lines" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lines" />
+
+            <ImageView
+                android:layout_width="110dp"
+                android:layout_height="wrap_content"
+                android:src="@drawable/lines" />
+
+        </LinearLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerInParent="true">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="200dp"
+                android:layout_height="150dp"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:src="@drawable/joystick"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.7" />
+
+            <ImageView
+                android:id="@+id/selectBtn"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/controlx"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.833"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintVertical_bias="0.31" />
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/controldirections"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/selectBtn"
+                app:layout_constraintHorizontal_bias="0.48"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView2"
+                app:layout_constraintVertical_bias="0.29000002" />
+
+            <View
+                android:id="@+id/rightBt"
+                android:layout_width="20dp"
+                android:layout_height="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/selectBtn"
+                app:layout_constraintHorizontal_bias="0.4"
+                app:layout_constraintStart_toStartOf="@+id/imageView2"
+                app:layout_constraintTop_toTopOf="@+id/imageView5"
+                app:layout_constraintVertical_bias="0.17000002" />
+
+            <View
+                android:id="@+id/leftBt"
+                android:layout_width="20dp"
+                android:layout_height="10dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toStartOf="@+id/rightBt"
+                app:layout_constraintHorizontal_bias="0.76"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imageView5"
+                app:layout_constraintVertical_bias="0.47000003" />
+
+            <View
+                android:id="@+id/upBt"
+                android:layout_width="10dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView5"
+                app:layout_constraintEnd_toEndOf="@+id/imageView5"
+                app:layout_constraintHorizontal_bias="0.54"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toTopOf="@+id/imageView5"
+                app:layout_constraintVertical_bias="0.060000002" />
+
+            <View
+                android:id="@+id/downBt"
+                android:layout_width="10dp"
+                android:layout_height="20dp"
+                app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+                app:layout_constraintEnd_toEndOf="@+id/rightBt"
+                app:layout_constraintHorizontal_bias="0.49"
+                app:layout_constraintStart_toStartOf="@+id/imageView5"
+                app:layout_constraintTop_toBottomOf="@+id/upBt"
+                app:layout_constraintVertical_bias="0.06999999" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <ImageView
+            android:id="@+id/cursor"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/cursor" />
+
+    </RelativeLayout>
+
+</FrameLayout>

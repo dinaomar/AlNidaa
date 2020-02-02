@@ -33,11 +33,8 @@ class GameFragment : Fragment() {
     lateinit var wordsTwo: List<String>
     lateinit var stringThree: String
     lateinit var wordsThree: List<String>
+    var span = SpannableStringBuilder()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -68,7 +65,16 @@ class GameFragment : Fragment() {
 
         mPlayerbackground?.start()
         startTimer()
+        btnStart.setOnClickListener { startGame() }
 
+    }
+
+    private fun startGame() {
+        val questionsFragment = QuestionsFragment.newInstance()
+        val fragmentTransaction = fragmentManager?.beginTransaction()
+        fragmentTransaction?.setCustomAnimations(R.anim.in_from_right, R.anim.out_to_left)
+        fragmentTransaction?.replace(R.id.fragment, questionsFragment)
+        fragmentTransaction?.commit()
     }
 
     private fun startTimer() {
@@ -96,17 +102,21 @@ class GameFragment : Fragment() {
     override fun onStop() {
         super.onStop()
         mPlayerbackground?.stop()
+        mPlayerQustion?.stop()
+        handlerOne.removeCallbacks(runnableOne);
+        handlerTwo.removeCallbacks(runnableTwo);
+        handlerThree.removeCallbacks(runnableThree);
+
     }
 
     override fun onDestroy() {
         super.onDestroy()
         mPlayerbackground = null
+        mPlayerQustion = null
     }
 
     private val runnableOne = object : Runnable {
         override fun run() {
-            var span = SpannableStringBuilder()
-
             if (i < wordsOne.size) {
                 span = SpannableStringBuilder(stringOne)
                 span.setSpan(
@@ -117,15 +127,16 @@ class GameFragment : Fragment() {
                 )
                 textView1.setTextKeepState(span)
                 start += wordsOne[i].length + i
-                i++
                 span.clearSpans()
-                handlerOne.postDelayed(this, 1000)
+                handlerOne.postDelayed(this, (100 * wordsOne[i].length).toLong())
+                i++
 
             } else {
                 i = 0
                 start = 0
-                span.clearSpans()
-                handlerTwo.postDelayed(runnableTwo, 100)
+                handlerTwo.postDelayed(runnableTwo, 10)
+                span = SpannableStringBuilder(stringOne)
+                textView1.setTextKeepState(span)
             }
         }
 
@@ -133,7 +144,6 @@ class GameFragment : Fragment() {
 
     private val runnableTwo = object : Runnable {
         override fun run() {
-            var span = SpannableStringBuilder()
             if (i < wordsTwo.size) {
                 span = SpannableStringBuilder(stringTwo)
                 span.setSpan(
@@ -144,21 +154,22 @@ class GameFragment : Fragment() {
                 )
                 textView2.setTextKeepState(span)
                 start += wordsTwo[i].length + i
-                i++
                 span.clearSpans()
-                handlerTwo.postDelayed(this, 800)
+                handlerTwo.postDelayed(this, (100 * wordsTwo[i].length).toLong())
+                i++
 
             } else {
                 i = 0
                 start = 0
                 handlerThree.postDelayed(runnableThree, 10)
+                span = SpannableStringBuilder(stringTwo)
+                textView2.setTextKeepState(span)
             }
         }
     }
 
     private val runnableThree = object : Runnable {
         override fun run() {
-            var span = SpannableStringBuilder()
             if (i < wordsThree.size) {
                 span = SpannableStringBuilder(stringThree)
                 span.setSpan(
@@ -169,14 +180,15 @@ class GameFragment : Fragment() {
                 )
                 textView3.setTextKeepState(span)
                 start += wordsThree[i].length + i
-                i++
                 span.clearSpans()
-                handlerThree.postDelayed(this, 700)
+                handlerThree.postDelayed(this, (100 * wordsThree[i].length).toLong())
+                i++
 
             } else {
                 i = 0
                 start = 0
-                span.clear()
+                span = SpannableStringBuilder(stringThree)
+                textView3.setTextKeepState(span)
             }
 
         }
