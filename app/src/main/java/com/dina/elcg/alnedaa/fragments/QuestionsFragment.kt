@@ -1,8 +1,6 @@
 package com.dina.elcg.alnedaa.fragments
 
 import android.annotation.SuppressLint
-import android.graphics.BlendMode
-import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Build
@@ -13,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.annotation.RequiresApi
 import androidx.core.content.ContextCompat
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.dina.elcg.alnedaa.R
 import kotlinx.android.synthetic.main.fragment_questions.*
@@ -49,28 +48,49 @@ class QuestionsFragment : Fragment() {
         selectBtn.setOnClickListener { functionSelect() }
     }
 
-    @SuppressLint("NewApi")
+
+    @SuppressLint("ResourceType")
     @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun functionSelect() {
-        if (checkCollision(cursor,wordOne)){
-            // do something
-            wordOne.backgroundTintList = ContextCompat.getColorStateList(requireContext(), R.color.colorPrimary)
-        }
-        else if (checkCollision(cursor,wordTwo)){
+        if (cursorLayout.childCount == 1) {
+            when {
+                checkCollision(cursorLayout, wordOne) -> {
+                    // do something
+                    wordOne.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
+                    // move it with the cursor
+                    if (wordOne.parent != null)
+                        (wordOne.parent as ViewGroup).removeView(wordOne)
+                    cursorLayout.addView(wordOne)
+                }
+                checkCollision(cursorLayout, wordTwo) -> {
+
+                }
+                checkCollision(cursorLayout, wordThree) -> {
+
+                }
+                checkCollision(cursorLayout, wordFour) -> {
+
+                }
+                checkCollision(cursorLayout, wordFive) -> {
+
+                }
+                checkCollision(cursorLayout, wordSix) -> {
+
+                }
+            }
+        } else {
+
+            when {
+                checkCollision(cursorLayout.get(0), lineSix) -> {
+                    cursorLayout.removeViewAt(1)
+                    // add word to line layout
+                    // remove it from cursor layout
+                }
+            }
 
         }
-        else if (checkCollision(cursor,wordThree)){
 
-        }
-        else if (checkCollision(cursor,wordFour)){
-
-        }
-        else if (checkCollision(cursor,wordFive)){
-
-        }
-        else if (checkCollision(cursor,wordSix)){
-
-        }
     }
 
     private fun checkCollision(v1: View, v2: View): Boolean {
@@ -80,27 +100,27 @@ class QuestionsFragment : Fragment() {
     }
 
     private fun functionUp() {
-        val paramsTop = cursor.layoutParams as RelativeLayout.LayoutParams
+        val paramsTop = cursorLayout.layoutParams as RelativeLayout.LayoutParams
         paramsTop.bottomMargin += 20
-        cursor.layoutParams = paramsTop
+        cursorLayout.layoutParams = paramsTop
     }
 
     private fun functionDown() {
-        val paramsBottom = cursor.layoutParams as RelativeLayout.LayoutParams
+        val paramsBottom = cursorLayout.layoutParams as RelativeLayout.LayoutParams
         paramsBottom.bottomMargin -= 20
-        cursor.layoutParams = paramsBottom
+        cursorLayout.layoutParams = paramsBottom
     }
 
     private fun functionLeft() {
-        val paramsLeft = cursor.layoutParams as RelativeLayout.LayoutParams
+        val paramsLeft = cursorLayout.layoutParams as RelativeLayout.LayoutParams
         paramsLeft.leftMargin -= 20
-        cursor.layoutParams = paramsLeft
+        cursorLayout.layoutParams = paramsLeft
     }
 
     private fun functionRight() {
-        val paramsRight = cursor.layoutParams as RelativeLayout.LayoutParams
+        val paramsRight = cursorLayout.layoutParams as RelativeLayout.LayoutParams
         paramsRight.leftMargin += 20
-        cursor.layoutParams = paramsRight
+        cursorLayout.layoutParams = paramsRight
     }
 
 
