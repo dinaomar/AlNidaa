@@ -5,6 +5,7 @@ import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -55,42 +56,104 @@ class QuestionsFragment : Fragment() {
         if (cursorLayout.childCount == 1) {
             when {
                 checkCollision(cursorLayout, wordOne) -> {
-                    // do something
                     wordOne.backgroundTintList =
                         ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
-                    // move it with the cursor
                     if (wordOne.parent != null)
                         (wordOne.parent as ViewGroup).removeView(wordOne)
                     cursorLayout.addView(wordOne)
                 }
                 checkCollision(cursorLayout, wordTwo) -> {
-
+                    wordTwo.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
+                    if (wordTwo.parent != null)
+                        (wordTwo.parent as ViewGroup).removeView(wordTwo)
+                    cursorLayout.addView(wordTwo)
                 }
                 checkCollision(cursorLayout, wordThree) -> {
-
+                    wordThree.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
+                    if (wordThree.parent != null)
+                        (wordThree.parent as ViewGroup).removeView(wordThree)
+                    cursorLayout.addView(wordThree)
                 }
                 checkCollision(cursorLayout, wordFour) -> {
-
+                    wordFour.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
+                    if (wordFour.parent != null)
+                        (wordFour.parent as ViewGroup).removeView(wordFour)
+                    cursorLayout.addView(wordFour)
                 }
                 checkCollision(cursorLayout, wordFive) -> {
-
+                    wordFive.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
+                    if (wordFive.parent != null)
+                        (wordFive.parent as ViewGroup).removeView(wordFive)
+                    cursorLayout.addView(wordFive)
                 }
                 checkCollision(cursorLayout, wordSix) -> {
-
+                    wordSix.backgroundTintList =
+                        ContextCompat.getColorStateList(requireContext(), R.color.terquaz)
+                    if (wordSix.parent != null)
+                        (wordSix.parent as ViewGroup).removeView(wordSix)
+                    cursorLayout.addView(wordSix)
                 }
             }
         } else {
 
             when {
-                checkCollision(cursorLayout.get(0), lineSix) -> {
+                checkCollision(cursorLayout[1], lineOne) -> {
+                    val view: View = cursorLayout.getChildAt(1)
                     cursorLayout.removeViewAt(1)
-                    // add word to line layout
-                    // remove it from cursor layout
+                    if (view.parent != null)
+                        (view.parent as ViewGroup).removeView(view)
+                    lineOne.addView(view)
+                }
+                checkCollision(cursorLayout[1], lineTwo) -> {
+                    val view: View = cursorLayout.getChildAt(1)
+                    cursorLayout.removeViewAt(1)
+                    if (view.parent != null)
+                        (view.parent as ViewGroup).removeView(view)
+                    lineTwo.addView(view)
+                }
+                checkCollision(cursorLayout[1], lineThree) -> {
+                    val view: View = cursorLayout.getChildAt(1)
+                    cursorLayout.removeViewAt(1)
+                    if (view.parent != null)
+                        (view.parent as ViewGroup).removeView(view)
+                    lineThree.addView(view)
+                }
+                checkCollision(cursorLayout[1], lineFour) -> {
+                    val view: View = cursorLayout.getChildAt(1)
+                    cursorLayout.removeViewAt(1)
+                    if (view.parent != null)
+                        (view.parent as ViewGroup).removeView(view)
+                    lineFour.addView(view)
+                }
+                checkCollision(cursorLayout[1], lineFive) -> {
+                    val view: View = cursorLayout.getChildAt(1)
+                    cursorLayout.removeViewAt(1)
+                    if (view.parent != null)
+                        (view.parent as ViewGroup).removeView(view)
+                    lineFive.addView(view)
+                }
+                checkCollision(cursorLayout[1], lineSix) -> {
+                    val view: View = cursorLayout.getChildAt(1)
+                    cursorLayout.removeViewAt(1)
+                    if (view.parent != null)
+                        (view.parent as ViewGroup).removeView(view)
+                    lineSix.addView(view)
+                    checkResult()
                 }
             }
 
         }
 
+    }
+
+    private fun checkResult() {
+        if (lineSix.tag == lineSix.getChildAt(1).tag){
+            Log.w("tag","correct")
+        }
     }
 
     private fun checkCollision(v1: View, v2: View): Boolean {
