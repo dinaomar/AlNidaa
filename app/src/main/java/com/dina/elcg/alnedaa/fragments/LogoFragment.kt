@@ -28,13 +28,17 @@ class LogoFragment : Fragment() {
         val timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
-                val fragmentTransaction = fragmentManager?.beginTransaction()
-                val gameFragment = GameFragment.newInstance()
-                fragmentTransaction?.setCustomAnimations(R.anim.in_from_right,R.anim.out_to_left)
-                fragmentTransaction?.replace(R.id.fragment,gameFragment)
-                fragmentTransaction?.commit()
+                    val fragmentTransaction = fragmentManager?.beginTransaction()
+                    val gameFragment = GameFragment.newInstance()
+                    fragmentTransaction?.setCustomAnimations(
+                        R.anim.in_from_right,
+                        R.anim.out_to_left
+                    )
+                    fragmentTransaction?.replace(R.id.fragment, gameFragment)
+                    fragmentTransaction?.commitAllowingStateLoss()
+
             }
-        }, 5000)
+        }, 500)
     }
 
 

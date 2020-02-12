@@ -62,10 +62,14 @@ class GameFragment : Fragment() {
         handlerOne = Handler()
         handlerThree = Handler()
         handlerTwo = Handler()
-
-        mPlayerbackground?.start()
-        startTimer()
         btnStart.setOnClickListener { startGame() }
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        startTimer()
+        mPlayerbackground?.start()
 
     }
 
@@ -90,14 +94,6 @@ class GameFragment : Fragment() {
     }
 
 
-    override fun onAttach(context: Context) {
-        super.onAttach(context)
-
-    }
-
-    override fun onDetach() {
-        super.onDetach()
-    }
 
     override fun onStop() {
         super.onStop()

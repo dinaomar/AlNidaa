@@ -9,6 +9,7 @@
     tools:context=".fragments.QuestionsFragment">
 
     <RelativeLayout
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -19,13 +20,13 @@
             android:orientation="horizontal">
 
             <RelativeLayout
-                android:id="@+id/wordOne"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:background="@drawable/choicebox"
                 android:tag="one">
 
                 <TextView
+                    android:id="@+id/wordOne"
                     style="@style/textViewSentence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -39,12 +40,12 @@
                 android:layout_height="0dp" />
 
             <RelativeLayout
-                android:id="@+id/wordTwo"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:background="@drawable/choicebox">
 
                 <TextView
+                    android:id="@+id/wordTwo"
                     style="@style/textViewSentence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -58,12 +59,12 @@
                 android:layout_height="0dp" />
 
             <RelativeLayout
-                android:id="@+id/wordThree"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:background="@drawable/choicebox">
 
                 <TextView
+                    android:id="@+id/wordThree"
                     style="@style/textViewSentence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -78,12 +79,12 @@
 
 
             <RelativeLayout
-                android:id="@+id/wordFour"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:background="@drawable/choicebox">
 
                 <TextView
+                    android:id="@+id/wordFour"
                     style="@style/textViewSentence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -98,12 +99,12 @@
 
 
             <RelativeLayout
-                android:id="@+id/wordFive"
                 android:layout_width="100dp"
                 android:layout_height="50dp"
                 android:background="@drawable/choicebox">
 
                 <TextView
+                    android:id="@+id/wordFive"
                     style="@style/textViewSentence"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -138,17 +139,17 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_alignParentRight="true"
-            android:gravity="right"
             android:layout_centerVertical="true"
+            android:gravity="right"
             android:layoutDirection="rtl"
             android:orientation="horizontal" />
 
         <LinearLayout
+            android:id="@+id/lines"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:gravity="right"
-            android:id="@+id/lines"
             android:orientation="horizontal">
 
             <ImageView
@@ -312,16 +313,15 @@
 
         <FrameLayout
             android:id="@+id/cursorLayout"
-            android:layout_width="50dp"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
-            android:background="@drawable/cursor">
+            android:layout_alignParentBottom="true">
 
-<!--            <ImageView-->
-<!--                android:id="@+id/cursor"-->
-<!--                android:layout_width="50dp"-->
-<!--                android:layout_height="50dp"-->
-<!--                android:src="@drawable/cursor" />-->
+            <ImageView
+                android:id="@+id/cursor"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/cursor" />
         </FrameLayout>
 
     </RelativeLayout>
