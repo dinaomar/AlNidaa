@@ -1,11 +1,13 @@
 package com.dina.elcg.alnedaa.fragments
 
 import android.annotation.SuppressLint
+import android.graphics.Color
 import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -13,7 +15,6 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
-import androidx.core.content.ContextCompat
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.dina.elcg.alnedaa.QuestionsBank
@@ -55,19 +56,21 @@ class QuestionsFragment : Fragment() {
 
     private fun drawLayout() {
         val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionOne)
+        val dpCalculation = resources.displayMetrics.density
         for (word: String in words) {
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
-            val imageBorder = ImageView(requireContext())
-            imageBorder.setImageResource(R.drawable.choicebox)
-            imageBorder.layoutParams.width = 80
-            imageBorder.layoutParams.height = 50
             wordText.text = word
-            wordContainer.addView(imageBorder)
             wordContainer.addView(wordText)
             wordsLayout.addView(wordContainer)
             val imageLine = ImageView(requireContext())
             lines.addView(imageLine)
+            wordText.textSize = 20F
+            wordText.setTextColor(Color.parseColor("#FFFFFF"))
+            wordText.layoutParams.height = 150
+            wordText.setBackgroundResource(R.drawable.word_border)
+            wordText.gravity = Gravity.CENTER
+
         }
     }
 
