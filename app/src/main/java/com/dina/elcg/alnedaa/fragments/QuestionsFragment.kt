@@ -14,6 +14,7 @@ import android.widget.ImageView
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
+import androidx.core.view.children
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.dina.elcg.alnedaa.QuestionsBank
@@ -52,8 +53,6 @@ class QuestionsFragment : Fragment() {
         rightBt.setOnClickListener { functionRight() }
         selectBtn.setOnClickListener { functionSelect() }
 
-        getXY(cursorLayout)
-
         drawLayout()
     }
 
@@ -84,6 +83,10 @@ class QuestionsFragment : Fragment() {
             lineContainer.tag = words.indexOf(word)
             listOfLinesImageView.add(lineContainer)
 
+            val sepratorView = View(requireContext())
+            lines.addView(sepratorView)
+            sepratorView.layoutParams.width = 20
+
         }
     }
 
@@ -92,8 +95,7 @@ class QuestionsFragment : Fragment() {
         var rect2 = Rect()
 
         for (i in 0 until listOfTextViews.size) {
-
-            if (cursorLayout.childCount==1) {
+            if (cursorLayout.childCount == 1) {
                 cursorLayout.getGlobalVisibleRect(rect1)
                 listOfTextViews[i].getGlobalVisibleRect(rect2)
                 if (rect1.intersect(rect2)) {
@@ -103,20 +105,39 @@ class QuestionsFragment : Fragment() {
                     cursorLayout.addView(listOfTextViews[i])
                     break
                 }
-            }
-            else {
-//                if (checkCollision(targets, cursorLayout)) {
-//                    val view = cursorLayout[1]
-//                    if (view.parent != null) {
-//                        (view.parent as ViewGroup).removeView(view)
-//                    }
-//                    targets.addView(view)
-//                    break
-//                }
+            } else {
+                cursorLayout.getGlobalVisibleRect(rect1)
+                listOfLinesImageView[i].getGlobalVisibleRect(rect2)
+                if (rect1.intersect(rect2)) {
+                    val view = cursorLayout[1]
+                    if (view.parent != null) {
+                        (view.parent as ViewGroup).removeView(view)
+                    }
+                    listOfLinesImageView[i].addView(view)
+                    break
+                }
             }
         }
     }
 
+    private fun checkResult(){
+        var score:Int = 0
+        if (lines.childCount == listOfTextViews.size){
+            for (child:RelativeLayout in listOfLinesImageView){
+                if (child[0].tag == child[1].tag){
+                    score++
+                }
+            }
+            if (score == listOfTextViews.size){
+                // all words placed correct
+                
+            }
+            else {
+                // not all words placed correctly
+                // show error message
+            }
+        }
+    }
 
     private fun functionUp() {
 
@@ -124,7 +145,6 @@ class QuestionsFragment : Fragment() {
         paramsTop.bottomMargin += 60
         cursorLayout.layoutParams = paramsTop
         cursorLayout.invalidate()
-        getXY(cursorLayout)
     }
 
     private fun functionDown() {
@@ -132,7 +152,6 @@ class QuestionsFragment : Fragment() {
         paramsBottom.bottomMargin -= 60
         cursorLayout.layoutParams = paramsBottom
         cursorLayout.invalidate()
-        getXY(cursorLayout)
 
     }
 
@@ -141,8 +160,6 @@ class QuestionsFragment : Fragment() {
         paramsLeft.leftMargin -= 60
         cursorLayout.layoutParams = paramsLeft
         cursorLayout.invalidate()
-        getXY(cursorLayout)
-
     }
 
     private fun functionRight() {
@@ -150,8 +167,6 @@ class QuestionsFragment : Fragment() {
         paramsRight.leftMargin += 60
         cursorLayout.layoutParams = paramsRight
         cursorLayout.invalidate()
-        getXY(cursorLayout)
-
     }
 
     fun getXY(view: View) {
