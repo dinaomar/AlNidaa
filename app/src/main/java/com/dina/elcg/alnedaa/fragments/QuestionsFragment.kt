@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -89,9 +88,15 @@ class QuestionsFragment : Fragment() {
     }
 
     private fun functionSelect() {
+        var rect1 = Rect()
+        var rect2 = Rect()
+
         for (i in 0 until listOfTextViews.size) {
+
             if (cursorLayout.childCount==1) {
-                if (checkCollision(listOfTextViews[i], cursorLayout)) {
+                cursorLayout.getGlobalVisibleRect(rect1)
+                listOfTextViews[i].getGlobalVisibleRect(rect2)
+                if (rect1.intersect(rect2)) {
                     if (listOfTextViews[i].parent != null) {
                         (listOfTextViews[i].parent as ViewGroup).removeView(listOfTextViews[i])
                     }
@@ -100,31 +105,16 @@ class QuestionsFragment : Fragment() {
                 }
             }
             else {
-                if (checkCollision(targets, cursorLayout)) {
-                    val view = cursorLayout[1]
-                    if (view.parent != null) {
-                        (view.parent as ViewGroup).removeView(view)
-                    }
-                    targets.addView(view)
-                    break
-                }
+//                if (checkCollision(targets, cursorLayout)) {
+//                    val view = cursorLayout[1]
+//                    if (view.parent != null) {
+//                        (view.parent as ViewGroup).removeView(view)
+//                    }
+//                    targets.addView(view)
+//                    break
+//                }
             }
         }
-    }
-
-
-    private fun checkCollision(v1: View, v2: View): Boolean {
-//        var rect1 = Rect()
-//
-//        v1.getHitRect(rect1)
-//        var rect2 = Rect()
-//        v2.getHitRect(rect2)
-
-        val R1 = Rect(v1.left, v1.top, v1.right, v1.bottom)
-        val R2 = Rect(v2.left, v2.top, v2.right, v2.bottom)
-        return R1.intersect(R2)
-
-//        return rect1.intersect(rect2)
     }
 
 
