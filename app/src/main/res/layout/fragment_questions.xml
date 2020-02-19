@@ -36,7 +36,7 @@
         <LinearLayout
             android:id="@+id/lines"
             android:layout_width="match_parent"
-            android:layout_height="20dp"
+            android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:gravity="right"
             android:orientation="horizontal">

@@ -1,6 +1,5 @@
 package com.dina.elcg.alnedaa.fragments
 
-import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.Rect
 import android.media.MediaPlayer
@@ -12,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.RelativeLayout
 import android.widget.TextView
 import androidx.annotation.RequiresApi
@@ -27,6 +27,8 @@ import kotlinx.android.synthetic.main.fragment_questions.*
 class QuestionsFragment : Fragment() {
 
     var mPlayerbackground: MediaPlayer? = null
+    var listOfTextViews: ArrayList<TextView> = ArrayList()
+    var listOfLinesImageView: ArrayList<RelativeLayout> = ArrayList()
 
 
     override fun onCreateView(
@@ -51,82 +53,65 @@ class QuestionsFragment : Fragment() {
         rightBt.setOnClickListener { functionRight() }
         selectBtn.setOnClickListener { functionSelect() }
 
+        getXY(cursorLayout)
+
         drawLayout()
     }
 
     private fun drawLayout() {
         val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionOne)
-        val dpCalculation = resources.displayMetrics.density
+//        val dpCalculation = resources.displayMetrics.density
         for (word: String in words) {
+            // words layout
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
             wordText.text = word
             wordContainer.addView(wordText)
             wordsLayout.addView(wordContainer)
-            val imageLine = ImageView(requireContext())
-            lines.addView(imageLine)
             wordText.textSize = 20F
             wordText.setTextColor(Color.parseColor("#FFFFFF"))
             wordText.layoutParams.height = 150
             wordText.setBackgroundResource(R.drawable.word_border)
             wordText.gravity = Gravity.CENTER
+            wordText.tag = words.indexOf(word)
+            listOfTextViews.add(wordText)
+
+            // lines layout
+            val lineContainer = RelativeLayout(requireContext())
+            val imageLine = ImageView(requireContext())
+            imageLine.setImageResource(R.drawable.lines)
+            lineContainer.addView(imageLine)
+            lines.addView(lineContainer)
+            lineContainer.tag = words.indexOf(word)
+            listOfLinesImageView.add(lineContainer)
 
         }
     }
 
-
-    @SuppressLint("ResourceType")
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     private fun functionSelect() {
-//        if (cursorLayout.childCount == 1) {
-        when {
-
-//            }
-//        } else {
-//
-//            when {
-//                checkCollision(cursorLayout[0], lines) -> {
-//                    val view = cursorLayout[0]
-//                    if (view.parent != null)
-//                        (view.parent as ViewGroup).removeView(view)
-//                    targets.addView(view)
-//                    cursorLayout[0].visibility = View.VISIBLE
-//                    cursorLayout.removeView(view)
-//                    checkResult()
-//                }
-//                checkCollision(cursorLayout[0], lines) -> {
-//                    val view = cursorLayout[0]
-//                    if (view.parent != null)
-//                        (view.parent as ViewGroup).removeView(view)
-//                    targets.addView(view)
-//                    cursorLayout[0].visibility = View.VISIBLE
-//                    cursorLayout.removeView(view)
-//                    checkResult()
-//                }
-//                checkCollision(cursorLayout, lines) -> {
-//                    val view = cursorLayout[0]
-//                    if (view.parent != null)
-//                        (view.parent as ViewGroup).removeView(view)
-//                    targets.addView(view)
-//                    cursorLayout[0].visibility = View.VISIBLE
-//                    cursorLayout.removeView(view)
-//                    checkResult()
-//                }
-//            }
-
+        for (i in 0 until listOfTextViews.size) {
+            if (cursorLayout.childCount==1) {
+                if (checkCollision(listOfTextViews[i], cursorLayout)) {
+                    if (listOfTextViews[i].parent != null) {
+                        (listOfTextViews[i].parent as ViewGroup).removeView(listOfTextViews[i])
+                    }
+                    cursorLayout.addView(listOfTextViews[i])
+                    break
+                }
+            }
+            else {
+                if (checkCollision(targets, cursorLayout)) {
+                    val view = cursorLayout[1]
+                    if (view.parent != null) {
+                        (view.parent as ViewGroup).removeView(view)
+                    }
+                    targets.addView(view)
+                    break
+                }
+            }
         }
     }
 
-
-    private fun checkResult() {
-        if (targets.childCount == 6) {
-            if (targets[0].tag == "one" && targets[1].tag == "two" &&
-                targets[2].tag == "three" && targets[3].tag == "four" &&
-                targets[4].tag == "five" && targets[5].tag == "six"
-            )
-                Log.w("right", "done")
-        }
-    }
 
     private fun checkCollision(v1: View, v2: View): Boolean {
 //        var rect1 = Rect()
@@ -157,6 +142,8 @@ class QuestionsFragment : Fragment() {
         paramsBottom.bottomMargin -= 60
         cursorLayout.layoutParams = paramsBottom
         cursorLayout.invalidate()
+        getXY(cursorLayout)
+
     }
 
     private fun functionLeft() {
@@ -164,6 +151,8 @@ class QuestionsFragment : Fragment() {
         paramsLeft.leftMargin -= 60
         cursorLayout.layoutParams = paramsLeft
         cursorLayout.invalidate()
+        getXY(cursorLayout)
+
     }
 
     private fun functionRight() {
@@ -171,6 +160,8 @@ class QuestionsFragment : Fragment() {
         paramsRight.leftMargin += 60
         cursorLayout.layoutParams = paramsRight
         cursorLayout.invalidate()
+        getXY(cursorLayout)
+
     }
 
     fun getXY(view: View) {
