@@ -19,7 +19,41 @@
             android:gravity="center"
             android:id="@+id/wordsLayout"
             android:orientation="horizontal">
+        </LinearLayout>
 
+        <LinearLayout
+            android:id="@+id/sentenceType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:visibility="gone"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="قريب"
+                android:id="@+id/close"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:background="@drawable/solid_border"
+                android:textColor="#E6BF24">
+
+            </TextView>
+            <View
+                android:layout_width="30dp"
+                android:layout_height="0dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="بعيد"
+                android:id="@+id/away"
+                android:gravity="center"
+                android:textSize="20sp"
+                android:background="@drawable/solid_border"
+                android:textColor="#E6BF24">
+
+            </TextView>
 
         </LinearLayout>
 
@@ -29,6 +63,7 @@
             android:layout_height="50dp"
             android:layout_centerVertical="true"
             android:gravity="center"
+            android:layoutDirection="rtl"
             android:orientation="horizontal">
 
         </LinearLayout>

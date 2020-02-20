@@ -1,26 +1,21 @@
 package com.dina.elcg.alnedaa.fragments
 
 import android.graphics.Color
+import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.media.MediaPlayer
-import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
-import android.widget.RelativeLayout
-import android.widget.TextView
-import androidx.annotation.RequiresApi
-import androidx.core.view.children
+import android.view.animation.AlphaAnimation
+import android.widget.*
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import com.dina.elcg.alnedaa.QuestionsBank
 import com.dina.elcg.alnedaa.R
 import com.dina.elcg.alnedaa.Utilities
-import com.dina.elcg.alnedaa.getLocationOnScreen
 import kotlinx.android.synthetic.main.fragment_questions.*
 
 
@@ -29,7 +24,7 @@ class QuestionsFragment : Fragment() {
     var mPlayerbackground: MediaPlayer? = null
     var listOfTextViews: ArrayList<TextView> = ArrayList()
     var listOfLinesImageView: ArrayList<RelativeLayout> = ArrayList()
-
+    var correctSentence = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,7 +34,6 @@ class QuestionsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_questions, container, false)
     }
 
-    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 //        mPlayerbackground = MediaPlayer.create(this.context, R.raw.musicbg)
@@ -67,7 +61,7 @@ class QuestionsFragment : Fragment() {
             wordContainer.addView(wordText)
             wordsLayout.addView(wordContainer)
             wordText.textSize = 20F
-            wordText.setTextColor(Color.parseColor("#FFFFFF"))
+            wordText.setTextColor(Color.parseColor("#E6BF24"))
             wordText.layoutParams.height = 150
             wordText.setBackgroundResource(R.drawable.word_border)
             wordText.gravity = Gravity.CENTER
@@ -79,14 +73,12 @@ class QuestionsFragment : Fragment() {
             val imageLine = ImageView(requireContext())
             imageLine.setImageResource(R.drawable.lines)
             lineContainer.addView(imageLine)
+            imageLine.tag = words.indexOf(word)
             lines.addView(lineContainer)
-            lineContainer.tag = words.indexOf(word)
             listOfLinesImageView.add(lineContainer)
-
-            val sepratorView = View(requireContext())
-            lines.addView(sepratorView)
-            sepratorView.layoutParams.width = 20
-
+            val relativeParams = lineContainer.layoutParams as LinearLayout.LayoutParams
+            relativeParams.setMargins(10, 5, 10, 5)// left, top, right, bottom
+            lineContainer.layoutParams = relativeParams
         }
     }
 
@@ -94,62 +86,114 @@ class QuestionsFragment : Fragment() {
         var rect1 = Rect()
         var rect2 = Rect()
 
-        for (i in 0 until listOfTextViews.size) {
-            if (cursorLayout.childCount == 1) {
-                cursorLayout.getGlobalVisibleRect(rect1)
-                listOfTextViews[i].getGlobalVisibleRect(rect2)
-                if (rect1.intersect(rect2)) {
-                    if (listOfTextViews[i].parent != null) {
-                        (listOfTextViews[i].parent as ViewGroup).removeView(listOfTextViews[i])
+        if (!correctSentence) {
+
+            for (i in 0 until listOfTextViews.size) {
+                if (cursorLayout.childCount == 1) {
+                    cursorLayout.getGlobalVisibleRect(rect1)
+                    listOfTextViews[i].getGlobalVisibleRect(rect2)
+                    if (rect1.intersect(rect2)) {
+                        if (listOfTextViews[i].parent != null) {
+                            (listOfTextViews[i].parent as ViewGroup).removeView(listOfTextViews[i])
+                        }
+                        cursorLayout.addView(listOfTextViews[i])
+                        break
                     }
-                    cursorLayout.addView(listOfTextViews[i])
-                    break
-                }
-            } else {
-                cursorLayout.getGlobalVisibleRect(rect1)
-                listOfLinesImageView[i].getGlobalVisibleRect(rect2)
-                if (rect1.intersect(rect2)) {
-                    val view = cursorLayout[1]
-                    if (view.parent != null) {
-                        (view.parent as ViewGroup).removeView(view)
+                } else {
+                    cursorLayout.getGlobalVisibleRect(rect1)
+                    listOfLinesImageView[i].getGlobalVisibleRect(rect2)
+                    if (rect1.intersect(rect2)) {
+                        val view = cursorLayout[1]
+                        if (view.parent != null) {
+                            (view.parent as ViewGroup).removeView(view)
+                        }
+                        listOfLinesImageView[i].addView(view)
+                        view.setBackgroundResource(0)
+                        checkResult()
+                        break
                     }
-                    listOfLinesImageView[i].addView(view)
-                    break
                 }
+            }
+        } else {
+            cursorLayout.getGlobalVisibleRect(rect1)
+            close.getGlobalVisibleRect(rect2)
+            if (rect1.intersect(rect2)) {
+                // kareeb selected - right answer
+                close.setTextColor(Color.GREEN)
+                away.setTextColor(Color.parseColor("#E6BF24"))
+            }
+            cursorLayout.getGlobalVisibleRect(rect1)
+            away.getGlobalVisibleRect(rect2)
+            if (rect1.intersect(rect2)) {
+                // baeed selected - wrong
+                away.setTextColor(Color.RED)
+                close.setTextColor(Color.parseColor("#E6BF24"))
+
             }
         }
     }
 
-    private fun checkResult(){
-        var score:Int = 0
-        if (lines.childCount == listOfTextViews.size){
-            for (child:RelativeLayout in listOfLinesImageView){
-                if (child[0].tag == child[1].tag){
-                    score++
-                }
-            }
-            if (score == listOfTextViews.size){
-                // all words placed correct
-                
-            }
-            else {
-                // not all words placed correctly
-                // show error message
+    private fun checkResult() {
+        var score = 0
+        var counter = 6
+        for (child: RelativeLayout in listOfLinesImageView) {
+            if (child.childCount > 1) {
+                counter--
+                if (child[0].tag == child[1].tag) score++
+            } else {
+                counter++
+                break
             }
         }
+        if (counter == 0) {
+            if (score == listOfTextViews.size) {
+                // all words placed correct
+                Toast.makeText(requireContext(), "all done correct", Toast.LENGTH_LONG).show()
+                correctSentence = true
+                // remove dashes
+                for (child: RelativeLayout in listOfLinesImageView) {
+                    child[0].visibility = View.GONE
+                }
+                // play clap sound
+                val mp: MediaPlayer = MediaPlayer.create(
+                    requireContext(),
+                    R.raw.applause10
+                )
+                mp.start()
+                // show sentence type
+                sentenceType.visibility = View.VISIBLE
+                val animation1 = AlphaAnimation(0.4f, 1.0f)
+                animation1.duration = 500
+                animation1.startOffset = 3000
+                animation1.fillAfter = true
+                sentenceType.startAnimation(animation1)
+
+
+            } else {
+                // not all words placed correctly
+                // show error message
+                Toast.makeText(requireContext(), "error", Toast.LENGTH_LONG).show()
+                val mp: MediaPlayer = MediaPlayer.create(
+                    requireContext(),
+                    R.raw.boo2
+                )
+                mp.start()
+            }
+        }
+
     }
 
     private fun functionUp() {
 
         val paramsTop = cursorLayout.layoutParams as RelativeLayout.LayoutParams
-        paramsTop.bottomMargin += 60
+        paramsTop.bottomMargin += 100
         cursorLayout.layoutParams = paramsTop
         cursorLayout.invalidate()
     }
 
     private fun functionDown() {
         val paramsBottom = cursorLayout.layoutParams as RelativeLayout.LayoutParams
-        paramsBottom.bottomMargin -= 60
+        paramsBottom.bottomMargin -= 100
         cursorLayout.layoutParams = paramsBottom
         cursorLayout.invalidate()
 
@@ -157,24 +201,17 @@ class QuestionsFragment : Fragment() {
 
     private fun functionLeft() {
         val paramsLeft = cursorLayout.layoutParams as RelativeLayout.LayoutParams
-        paramsLeft.leftMargin -= 60
+        paramsLeft.leftMargin -= 100
         cursorLayout.layoutParams = paramsLeft
         cursorLayout.invalidate()
     }
 
     private fun functionRight() {
         val paramsRight = cursorLayout.layoutParams as RelativeLayout.LayoutParams
-        paramsRight.leftMargin += 60
+        paramsRight.leftMargin += 100
         cursorLayout.layoutParams = paramsRight
         cursorLayout.invalidate()
     }
-
-    fun getXY(view: View) {
-        Log.w("dinax", "" + view.getLocationOnScreen().x)
-        Log.w("dinay", "" + view.getLocationOnScreen().y)
-
-    }
-
 
     override fun onStop() {
         super.onStop()
