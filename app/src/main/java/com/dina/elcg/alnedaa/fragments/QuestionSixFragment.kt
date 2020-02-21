@@ -1,7 +1,6 @@
 package com.dina.elcg.alnedaa.fragments
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -22,9 +21,9 @@ import com.dina.elcg.alnedaa.Utilities
 import com.dina.elcg.alnedaa.databinding.FragmentQuestionsBinding
 import kotlinx.android.synthetic.main.fragment_questions.*
 
+class QuestionSixFragment : Fragment() {
 
-class QuestionsFragment : Fragment() {
-
+    var mPlayerbackground: MediaPlayer? = null
     lateinit var listOfTextViews: ArrayList<TextView>
     lateinit var listOfLinesImageView: ArrayList<RelativeLayout>
     var correctSentence = false
@@ -53,7 +52,7 @@ class QuestionsFragment : Fragment() {
     }
 
     private fun drawLayout() {
-        val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionOne)
+        val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionSix)
         listOfLinesImageView = ArrayList()
         listOfTextViews = ArrayList()
         for (word: String in words) {
@@ -124,7 +123,7 @@ class QuestionsFragment : Fragment() {
                 // kareeb selected - right answer
                 close.setTextColor(Color.GREEN)
                 away.setTextColor(Color.parseColor("#E6BF24"))
-                navigateToQuestionTwo()
+                // show replay button
             }
             cursorLayout.getGlobalVisibleRect(rect1)
             away.getGlobalVisibleRect(rect2)
@@ -136,14 +135,14 @@ class QuestionsFragment : Fragment() {
         }
     }
 
-    private fun navigateToQuestionTwo() {
+    private fun replay() {
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        val questionTwoFragment = QuestionTwoFragment.newInstance()
+        val questionsFragment = QuestionsFragment.newInstance()
         fragmentTransaction?.setCustomAnimations(
             R.anim.in_from_right,
             R.anim.out_to_left
         )
-        fragmentTransaction?.replace(R.id.fragment, questionTwoFragment)
+        fragmentTransaction?.replace(R.id.fragment, questionsFragment)
         fragmentTransaction?.commitAllowingStateLoss()
     }
 
@@ -204,11 +203,12 @@ class QuestionsFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
+        mPlayerbackground?.stop()
     }
 
     companion object {
         @JvmStatic
-        fun newInstance() = QuestionsFragment()
+        fun newInstance() = QuestionFiveFragment()
     }
-}
 
+}

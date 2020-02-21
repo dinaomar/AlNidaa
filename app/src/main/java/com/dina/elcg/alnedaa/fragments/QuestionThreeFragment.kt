@@ -1,7 +1,6 @@
 package com.dina.elcg.alnedaa.fragments
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -22,13 +21,16 @@ import com.dina.elcg.alnedaa.Utilities
 import com.dina.elcg.alnedaa.databinding.FragmentQuestionsBinding
 import kotlinx.android.synthetic.main.fragment_questions.*
 
-
-class QuestionsFragment : Fragment() {
+class QuestionThreeFragment : Fragment() {
 
     lateinit var listOfTextViews: ArrayList<TextView>
     lateinit var listOfLinesImageView: ArrayList<RelativeLayout>
     var correctSentence = false
-    private val viewModel: GameViewModel by activityViewModels()
+    val viewModel: GameViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +50,11 @@ class QuestionsFragment : Fragment() {
         leftBt.setOnClickListener { viewModel.functionLeft(cursorLayout) }
         rightBt.setOnClickListener { viewModel.functionRight(cursorLayout) }
         selectBtn.setOnClickListener { functionSelect() }
-
         drawLayout()
     }
 
     private fun drawLayout() {
-        val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionOne)
+        val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionThree)
         listOfLinesImageView = ArrayList()
         listOfTextViews = ArrayList()
         for (word: String in words) {
@@ -124,7 +125,7 @@ class QuestionsFragment : Fragment() {
                 // kareeb selected - right answer
                 close.setTextColor(Color.GREEN)
                 away.setTextColor(Color.parseColor("#E6BF24"))
-                navigateToQuestionTwo()
+                navigateToQuestionFour()
             }
             cursorLayout.getGlobalVisibleRect(rect1)
             away.getGlobalVisibleRect(rect2)
@@ -136,14 +137,14 @@ class QuestionsFragment : Fragment() {
         }
     }
 
-    private fun navigateToQuestionTwo() {
+    private fun navigateToQuestionFour() {
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        val questionTwoFragment = QuestionTwoFragment.newInstance()
+        val questionFourFragment = QuestionFourFragment.newInstance()
         fragmentTransaction?.setCustomAnimations(
             R.anim.in_from_right,
             R.anim.out_to_left
         )
-        fragmentTransaction?.replace(R.id.fragment, questionTwoFragment)
+        fragmentTransaction?.replace(R.id.fragment, questionFourFragment)
         fragmentTransaction?.commitAllowingStateLoss()
     }
 
@@ -202,13 +203,10 @@ class QuestionsFragment : Fragment() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
 
     companion object {
         @JvmStatic
-        fun newInstance() = QuestionsFragment()
+        fun newInstance() =
+            QuestionThreeFragment()
     }
 }
-

@@ -1,7 +1,6 @@
 package com.dina.elcg.alnedaa.fragments
 
 import android.graphics.Color
-import android.graphics.PorterDuff
 import android.graphics.Rect
 import android.media.MediaPlayer
 import android.os.Bundle
@@ -23,12 +22,16 @@ import com.dina.elcg.alnedaa.databinding.FragmentQuestionsBinding
 import kotlinx.android.synthetic.main.fragment_questions.*
 
 
-class QuestionsFragment : Fragment() {
+class QuestionTwoFragment : Fragment() {
 
     lateinit var listOfTextViews: ArrayList<TextView>
     lateinit var listOfLinesImageView: ArrayList<RelativeLayout>
     var correctSentence = false
-    private val viewModel: GameViewModel by activityViewModels()
+    val viewModel: GameViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,12 +51,11 @@ class QuestionsFragment : Fragment() {
         leftBt.setOnClickListener { viewModel.functionLeft(cursorLayout) }
         rightBt.setOnClickListener { viewModel.functionRight(cursorLayout) }
         selectBtn.setOnClickListener { functionSelect() }
-
         drawLayout()
     }
 
     private fun drawLayout() {
-        val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionOne)
+        val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionTwo)
         listOfLinesImageView = ArrayList()
         listOfTextViews = ArrayList()
         for (word: String in words) {
@@ -121,29 +123,27 @@ class QuestionsFragment : Fragment() {
             cursorLayout.getGlobalVisibleRect(rect1)
             close.getGlobalVisibleRect(rect2)
             if (rect1.intersect(rect2)) {
-                // kareeb selected - right answer
-                close.setTextColor(Color.GREEN)
-                away.setTextColor(Color.parseColor("#E6BF24"))
-                navigateToQuestionTwo()
+                away.setTextColor(Color.GREEN)
+                close.setTextColor(Color.parseColor("#E6BF24"))
             }
             cursorLayout.getGlobalVisibleRect(rect1)
             away.getGlobalVisibleRect(rect2)
             if (rect1.intersect(rect2)) {
-                // baeed selected - wrong
-                away.setTextColor(Color.RED)
-                close.setTextColor(Color.parseColor("#E6BF24"))
+                close.setTextColor(Color.RED)
+                away.setTextColor(Color.parseColor("#E6BF24"))
+                navigateToQuestionThree()
             }
         }
     }
 
-    private fun navigateToQuestionTwo() {
+    private fun navigateToQuestionThree() {
         val fragmentTransaction = fragmentManager?.beginTransaction()
-        val questionTwoFragment = QuestionTwoFragment.newInstance()
+        val questionThreeFragment = QuestionThreeFragment.newInstance()
         fragmentTransaction?.setCustomAnimations(
             R.anim.in_from_right,
             R.anim.out_to_left
         )
-        fragmentTransaction?.replace(R.id.fragment, questionTwoFragment)
+        fragmentTransaction?.replace(R.id.fragment, questionThreeFragment)
         fragmentTransaction?.commitAllowingStateLoss()
     }
 
@@ -202,13 +202,10 @@ class QuestionsFragment : Fragment() {
 
     }
 
-    override fun onStop() {
-        super.onStop()
-    }
 
     companion object {
         @JvmStatic
-        fun newInstance() = QuestionsFragment()
+        fun newInstance() =
+            QuestionTwoFragment()
     }
 }
-
