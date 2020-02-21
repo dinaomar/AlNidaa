@@ -19,6 +19,7 @@ import com.dina.elcg.alnedaa.QuestionsBank
 import com.dina.elcg.alnedaa.R
 import com.dina.elcg.alnedaa.Utilities
 import com.dina.elcg.alnedaa.databinding.FragmentQuestionsBinding
+import com.sdsmdg.tastytoast.TastyToast
 import kotlinx.android.synthetic.main.fragment_questions.*
 
 class QuestionSixFragment : Fragment() {
@@ -55,7 +56,7 @@ class QuestionSixFragment : Fragment() {
     private fun drawLives() {
         for (i: Int in 0 until viewModel.score.value!!) {
             val heartImage = ImageView(requireContext())
-            heartImage.setImageResource(R.drawable.heart)
+            heartImage.setImageResource(R.drawable.heartcropped)
             scoreLayout.addView(heartImage)
         }
     }
@@ -155,6 +156,13 @@ class QuestionSixFragment : Fragment() {
         fragmentTransaction?.commitAllowingStateLoss()
     }
 
+    private fun drawLive() {
+        val heartImage = ImageView(requireContext())
+        heartImage.setImageResource(R.drawable.heartcropped)
+        scoreLayout.addView(heartImage)
+
+    }
+
     private fun checkResult() {
         var score = 0
         var counter = listOfTextViews.size
@@ -170,7 +178,12 @@ class QuestionSixFragment : Fragment() {
         if (counter == 0) {
             if (score == listOfTextViews.size) {
                 // all words placed correct
-                Toast.makeText(requireContext(), "all done correct", Toast.LENGTH_LONG).show()
+                TastyToast.makeText(
+                    requireContext(),
+                    "أحسنت",
+                    TastyToast.LENGTH_LONG,
+                    TastyToast.SUCCESS
+                )
                 correctSentence = true
                 // remove dashes
                 for (child: RelativeLayout in listOfLinesImageView) {
@@ -190,18 +203,23 @@ class QuestionSixFragment : Fragment() {
                 animation1.fillAfter = true
                 sentenceType.startAnimation(animation1)
                 val heartImage = ImageView(requireContext())
-                heartImage.setImageResource(R.drawable.heart)
+                heartImage.setImageResource(R.drawable.heartcropped)
                 scoreLayout.addView(heartImage)
                 replay.visibility = View.VISIBLE
                 replay.startAnimation(animation1)
                 replay.setOnClickListener { replay() }
                 viewModel.score.value = 6
-                drawLives()
+                drawLive()
 
             } else {
                 // not all words placed correctly
                 // show error message
-                Toast.makeText(requireContext(), "error", Toast.LENGTH_LONG).show()
+                TastyToast.makeText(
+                    requireContext(),
+                    "حاول مرة أخري",
+                    TastyToast.LENGTH_LONG,
+                    TastyToast.ERROR
+                )
                 val mp: MediaPlayer = MediaPlayer.create(
                     requireContext(),
                     R.raw.boo2
