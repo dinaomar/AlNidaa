@@ -48,8 +48,17 @@ class QuestionsFragment : Fragment() {
         leftBt.setOnClickListener { viewModel.functionLeft(cursorLayout) }
         rightBt.setOnClickListener { viewModel.functionRight(cursorLayout) }
         selectBtn.setOnClickListener { functionSelect() }
-
+        replay.visibility = View.GONE
         drawLayout()
+        drawLives()
+    }
+
+    private fun drawLives() {
+        for (i: Int in 0 until viewModel.score.value!!) {
+            val heartImage = ImageView(requireContext())
+            heartImage.setImageResource(R.drawable.heart)
+            scoreLayout.addView(heartImage)
+        }
     }
 
     private fun drawLayout() {
@@ -63,7 +72,7 @@ class QuestionsFragment : Fragment() {
             wordText.text = word
             wordContainer.addView(wordText)
             wordsLayout.addView(wordContainer)
-            wordText.textSize = 20F
+            wordText.textSize = 18F
             wordText.setTextColor(Color.parseColor("#E6BF24"))
             wordText.layoutParams.height = 150
             wordText.setBackgroundResource(R.drawable.word_border)
@@ -181,9 +190,8 @@ class QuestionsFragment : Fragment() {
                 animation1.startOffset = 300
                 animation1.fillAfter = true
                 sentenceType.startAnimation(animation1)
-                val heartImage = ImageView(requireContext())
-                heartImage.setImageResource(R.drawable.heart)
-                scoreLayout.addView(heartImage)
+                viewModel.score.value = 1
+                drawLives()
 
             } else {
                 // not all words placed correctly

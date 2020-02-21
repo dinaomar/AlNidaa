@@ -6,10 +6,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class GameViewModel : ViewModel() {
-    var score: MutableLiveData<Int> = MutableLiveData()
+    var score: MutableLiveData<Int> = MutableLiveData(0)
 
      fun functionUp(view:View) {
-
         val paramsTop = view.layoutParams as RelativeLayout.LayoutParams
         paramsTop.bottomMargin += 150
         view.layoutParams = paramsTop

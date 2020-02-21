@@ -52,6 +52,15 @@ class QuestionTwoFragment : Fragment() {
         rightBt.setOnClickListener { viewModel.functionRight(cursorLayout) }
         selectBtn.setOnClickListener { functionSelect() }
         drawLayout()
+        drawLives()
+    }
+
+    private fun drawLives() {
+        for (i: Int in 0 until viewModel.score.value!!) {
+            val heartImage = ImageView(requireContext())
+            heartImage.setImageResource(R.drawable.heart)
+            scoreLayout.addView(heartImage)
+        }
     }
 
     private fun drawLayout() {
@@ -181,9 +190,8 @@ class QuestionTwoFragment : Fragment() {
                 animation1.startOffset = 300
                 animation1.fillAfter = true
                 sentenceType.startAnimation(animation1)
-                val heartImage = ImageView(requireContext())
-                heartImage.setImageResource(R.drawable.heart)
-                scoreLayout.addView(heartImage)
+                viewModel.score.value = 2
+                drawLives()
 
             } else {
                 // not all words placed correctly

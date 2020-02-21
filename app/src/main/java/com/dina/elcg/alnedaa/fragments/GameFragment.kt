@@ -19,7 +19,6 @@ import java.util.*
 
 class GameFragment : Fragment() {
 
-    var mPlayerbackground: MediaPlayer? = null
     var mPlayerQustion: MediaPlayer? = null
     lateinit var handlerOne: Handler
     lateinit var handlerTwo: Handler
@@ -46,9 +45,7 @@ class GameFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        mPlayerbackground = MediaPlayer.create(this.context, R.raw.musicbg)
         mPlayerQustion = MediaPlayer.create(this.context, R.raw.vo)
-        mPlayerbackground?.setVolume(0.3f, 0.3f)
         stringOne = textView1.text.toString()
         wordsOne = stringOne.split(" ")
 
@@ -69,7 +66,6 @@ class GameFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         startTimer()
-        mPlayerbackground?.start()
 
     }
 
@@ -85,7 +81,6 @@ class GameFragment : Fragment() {
         val timer = Timer()
         timer.schedule(object : TimerTask() {
             override fun run() {
-                mPlayerbackground?.setVolume(0.1f, 0.1f)
                 mPlayerQustion?.start()
                 handlerOne.postDelayed(runnableOne, 1000)
 
@@ -97,7 +92,6 @@ class GameFragment : Fragment() {
 
     override fun onStop() {
         super.onStop()
-        mPlayerbackground?.stop()
         mPlayerQustion?.stop()
         handlerOne.removeCallbacks(runnableOne);
         handlerTwo.removeCallbacks(runnableTwo);
@@ -107,7 +101,6 @@ class GameFragment : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        mPlayerbackground = null
         mPlayerQustion = null
     }
 

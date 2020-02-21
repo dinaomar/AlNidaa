@@ -49,6 +49,15 @@ class QuestionSixFragment : Fragment() {
         selectBtn.setOnClickListener { functionSelect() }
 
         drawLayout()
+        drawLives()
+    }
+
+    private fun drawLives() {
+        for (i: Int in 0 until viewModel.score.value!!) {
+            val heartImage = ImageView(requireContext())
+            heartImage.setImageResource(R.drawable.heart)
+            scoreLayout.addView(heartImage)
+        }
     }
 
     private fun drawLayout() {
@@ -183,6 +192,11 @@ class QuestionSixFragment : Fragment() {
                 val heartImage = ImageView(requireContext())
                 heartImage.setImageResource(R.drawable.heart)
                 scoreLayout.addView(heartImage)
+                replay.visibility = View.VISIBLE
+                replay.startAnimation(animation1)
+                replay.setOnClickListener { replay() }
+                viewModel.score.value = 6
+                drawLives()
 
             } else {
                 // not all words placed correctly

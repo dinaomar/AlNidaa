@@ -41,9 +41,6 @@ class QuestionFourFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-//        mPlayerbackground = MediaPlayer.create(this.context, R.raw.musicbg)
-//        mPlayerbackground?.setVolume(0.1f, 0.1f)
-//        mPlayerbackground?.start()
 
         upBt.setOnClickListener { viewModel.functionUp(cursorLayout) }
         downBt.setOnClickListener { viewModel.functionDown(cursorLayout) }
@@ -52,6 +49,15 @@ class QuestionFourFragment : Fragment() {
         selectBtn.setOnClickListener { functionSelect() }
 
         drawLayout()
+        drawLives()
+    }
+
+    private fun drawLives() {
+        for (i: Int in 0 until viewModel.score.value!!) {
+            val heartImage = ImageView(requireContext())
+            heartImage.setImageResource(R.drawable.heart)
+            scoreLayout.addView(heartImage)
+        }
     }
 
     private fun drawLayout() {
@@ -181,9 +187,8 @@ class QuestionFourFragment : Fragment() {
                 animation1.startOffset = 300
                 animation1.fillAfter = true
                 sentenceType.startAnimation(animation1)
-                val heartImage = ImageView(requireContext())
-                heartImage.setImageResource(R.drawable.heart)
-                scoreLayout.addView(heartImage)
+                viewModel.score.value = 4
+                drawLives()
 
             } else {
                 // not all words placed correctly

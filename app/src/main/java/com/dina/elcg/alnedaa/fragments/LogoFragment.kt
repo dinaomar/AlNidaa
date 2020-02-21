@@ -1,14 +1,18 @@
 package com.dina.elcg.alnedaa.fragments
 
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.dina.elcg.alnedaa.R
+import kotlinx.android.synthetic.main.fragment_logo.*
 import java.util.*
 
 class LogoFragment : Fragment() {
+
+    var mPlayerbackground: MediaPlayer? = null
 
 
     override fun onCreateView(
@@ -21,6 +25,10 @@ class LogoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        mPlayerbackground = MediaPlayer.create(requireContext(), R.raw.light)
+        mPlayerbackground?.setVolume(0.1f, 0.1f)
+        mPlayerbackground?.start()
+        logo.animate().translationXBy(550f).duration = 2000
         startTimer()
     }
 
@@ -38,7 +46,7 @@ class LogoFragment : Fragment() {
                     fragmentTransaction?.commitAllowingStateLoss()
 
             }
-        }, 500)
+        }, 5000)
     }
 
 
