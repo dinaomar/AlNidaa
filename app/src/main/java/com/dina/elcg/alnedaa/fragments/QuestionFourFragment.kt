@@ -70,19 +70,19 @@ class QuestionFourFragment : Fragment() {
         val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionFour)
         listOfLinesImageView = ArrayList()
         listOfTextViews = ArrayList()
-        for (word: String in words) {
+        (0 until words.size / 2).forEach { i: Int ->
             // words layout
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
-            wordText.text = word
+            wordText.text = words[i]
             wordContainer.addView(wordText)
             wordsLayout.addView(wordContainer)
-            wordText.textSize = 20F
+            wordText.textSize = 18F
             wordText.setTextColor(Color.parseColor("#E6BF24"))
             wordText.layoutParams.height = 150
             wordText.setBackgroundResource(R.drawable.word_border)
             wordText.gravity = Gravity.CENTER
-            wordText.tag = words.indexOf(word)
+            wordText.tag = words.indexOf(words[i])
             listOfTextViews.add(wordText)
 
             // lines layout
@@ -90,13 +90,45 @@ class QuestionFourFragment : Fragment() {
             val imageLine = ImageView(requireContext())
             imageLine.setImageResource(R.drawable.lines)
             lineContainer.addView(imageLine)
-            imageLine.tag = words.indexOf(word)
+            imageLine.tag = words.indexOf(words[i])
+            imageLine.id = words.indexOf(words[i])
             lines.addView(lineContainer)
             listOfLinesImageView.add(lineContainer)
             val relativeParams = lineContainer.layoutParams as LinearLayout.LayoutParams
-            relativeParams.setMargins(10, 5, 10, 5)// left, top, right, bottom
+            relativeParams.setMargins(10, 0, 10, 0)// left, top, right, bottom
             lineContainer.layoutParams = relativeParams
         }
+
+        (words.size / 2 until words.size).forEach { i: Int ->
+            // words layout
+            val wordContainer = RelativeLayout(requireContext())
+            val wordText = TextView(requireContext())
+            wordText.text = words[i]
+            wordContainer.addView(wordText)
+            wordsLayout2.addView(wordContainer)
+            wordText.textSize = 18F
+            wordText.setTextColor(Color.parseColor("#E6BF24"))
+            wordText.layoutParams.height = 150
+            wordText.setBackgroundResource(R.drawable.word_border)
+            wordText.gravity = Gravity.CENTER
+            wordText.tag = words.indexOf(words[i])
+            listOfTextViews.add(wordText)
+
+            // lines layout
+            val lineContainer = RelativeLayout(requireContext())
+            val imageLine = ImageView(requireContext())
+            imageLine.setImageResource(R.drawable.lines)
+            lineContainer.addView(imageLine)
+            imageLine.tag = words.indexOf(words[i])
+            imageLine.id = words.indexOf(words[i])
+            lines2.addView(lineContainer)
+            listOfLinesImageView.add(lineContainer)
+            val relativeParams = lineContainer.layoutParams as LinearLayout.LayoutParams
+            relativeParams.setMargins(10, 0, 10, 0)// left, top, right, bottom
+            lineContainer.layoutParams = relativeParams
+        }
+
+
     }
 
     private fun functionSelect() {
