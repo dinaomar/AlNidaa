@@ -5,4 +5,5 @@ object Utilities {
     fun splitQuestion(question: String): List<String> {
         return question.split("\\s".toRegex())
     }
+
 }

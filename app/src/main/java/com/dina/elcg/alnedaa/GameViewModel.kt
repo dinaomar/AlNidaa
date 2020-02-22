@@ -16,7 +16,7 @@ class GameViewModel : ViewModel() {
 
     fun functionUp(view: View) {
         val paramsTop = view.layoutParams as RelativeLayout.LayoutParams
-        rect = Rect(view.left, view.top - view.height * 2, view.right, view.bottom - view.height * 2)
+        rect = Rect(view.left, view.top - view.height , view.right, view.bottom - view.height )
         if (rect.intersect(screenRect.value)) {
             paramsTop.bottomMargin += 150
             view.layoutParams = paramsTop
@@ -26,7 +26,7 @@ class GameViewModel : ViewModel() {
 
     fun functionDown(view: View) {
         val paramsBottom = view.layoutParams as RelativeLayout.LayoutParams
-        rect = Rect(view.left, view.top + view.height * 3, view.right, view.bottom + view.height * 3)
+        rect = Rect(view.left, view.top + view.height , view.right, view.bottom + view.height )
         if (rect.intersect(screenRect.value)) {
             paramsBottom.bottomMargin -= 150
             view.layoutParams = paramsBottom

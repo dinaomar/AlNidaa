@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <data>
@@ -10,11 +11,11 @@
 
     </data>
 
-    <FrameLayout xmlns:tools="http://schemas.android.com/tools"
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/bg"
-        android:padding="20dp"
+        android:paddingTop="10dp"
         tools:context=".fragments.QuestionsFragment">
 
         <RelativeLayout
@@ -26,7 +27,14 @@
                 android:id="@+id/wordsLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="right"
+                android:gravity="center"
+                android:orientation="horizontal" />
+            <LinearLayout
+                android:id="@+id/wordsLayout2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:layout_below="@+id/wordsLayout"
                 android:orientation="horizontal" />
 
             <LinearLayout
@@ -70,8 +78,18 @@
                 android:id="@+id/lines"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:layout_centerVertical="true"
                 android:gravity="center"
+                android:layout_centerInParent="true"
+                android:layoutDirection="rtl"
+                android:orientation="horizontal"/>
+            <LinearLayout
+                android:id="@+id/lines2"
+                android:labelFor="@+id/lines"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:paddingTop="20dp"
+                android:gravity="center"
+                android:layout_below="@+id/lines"
                 android:layoutDirection="rtl"
                 android:orientation="horizontal"/>
 
@@ -86,11 +104,8 @@
                 <ImageView
                     android:id="@+id/imageView2"
                     android:layout_width="200dp"
-                    android:layout_height="150dp"
+                    android:layout_height="100dp"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginEnd="8dp"
-                    android:layout_marginBottom="8dp"
                     android:src="@drawable/joystick"
                     app:layout_constraintBottom_toBottomOf="parent"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -101,37 +116,37 @@
                 <ImageView
                     android:id="@+id/selectBtn"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/controlx"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintHorizontal_bias="0.833"
+                    app:layout_constraintHorizontal_bias="0.77"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent"
-                    app:layout_constraintVertical_bias="0.31" />
+                    app:layout_constraintVertical_bias="0.26999998" />
 
                 <ImageView
                     android:id="@+id/imageView5"
                     android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_height="25dp"
                     android:src="@drawable/controldirections"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintEnd_toStartOf="@+id/selectBtn"
-                    app:layout_constraintHorizontal_bias="0.48"
+                    app:layout_constraintEnd_toEndOf="@+id/selectBtn"
+                    app:layout_constraintHorizontal_bias="0.46"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/imageView2"
-                    app:layout_constraintVertical_bias="0.29000002" />
+                    app:layout_constraintVertical_bias="0.32" />
 
                 <View
                     android:id="@+id/rightBt"
-                    android:layout_width="20dp"
-                    android:layout_height="10dp"
+                    android:layout_width="10dp"
+                    android:layout_height="5dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                     app:layout_constraintEnd_toEndOf="@+id/selectBtn"
-                    app:layout_constraintHorizontal_bias="0.4"
+                    app:layout_constraintHorizontal_bias="0.47"
                     app:layout_constraintStart_toStartOf="@+id/imageView2"
                     app:layout_constraintTop_toTopOf="@+id/imageView5"
-                    app:layout_constraintVertical_bias="0.17000002" />
+                    app:layout_constraintVertical_bias="0.13999999" />
 
                 <View
                     android:id="@+id/leftBt"
@@ -139,32 +154,30 @@
                     android:layout_height="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                     app:layout_constraintEnd_toStartOf="@+id/rightBt"
-                    app:layout_constraintHorizontal_bias="0.76"
+                    app:layout_constraintHorizontal_bias="0.9"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="@+id/imageView5"
-                    app:layout_constraintVertical_bias="0.47000003" />
+                    app:layout_constraintVertical_bias="0.49" />
 
                 <View
                     android:id="@+id/upBt"
-                    android:layout_width="10dp"
+                    android:layout_width="5dp"
                     android:layout_height="20dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView5"
                     app:layout_constraintEnd_toEndOf="@+id/imageView5"
-                    app:layout_constraintHorizontal_bias="0.54"
                     app:layout_constraintStart_toStartOf="@+id/imageView5"
-                    app:layout_constraintTop_toTopOf="@+id/imageView5"
-                    app:layout_constraintVertical_bias="0.060000002" />
+                    app:layout_constraintTop_toTopOf="parent" />
 
                 <View
                     android:id="@+id/downBt"
-                    android:layout_width="10dp"
-                    android:layout_height="20dp"
+                    android:layout_width="8dp"
+                    android:layout_height="10dp"
                     app:layout_constraintBottom_toBottomOf="@+id/imageView2"
                     app:layout_constraintEnd_toEndOf="@+id/rightBt"
-                    app:layout_constraintHorizontal_bias="0.49"
+                    app:layout_constraintHorizontal_bias="0.72"
                     app:layout_constraintStart_toStartOf="@+id/imageView5"
-                    app:layout_constraintTop_toBottomOf="@+id/upBt"
-                    app:layout_constraintVertical_bias="0.06999999" />
+                    app:layout_constraintTop_toTopOf="@+id/imageView5"
+                    app:layout_constraintVertical_bias="0.25" />
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
