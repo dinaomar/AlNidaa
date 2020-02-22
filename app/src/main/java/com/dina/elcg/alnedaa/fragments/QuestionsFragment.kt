@@ -62,6 +62,11 @@ class QuestionsFragment : Fragment() {
             val heartImage = ImageView(requireContext())
             heartImage.setImageResource(R.drawable.heartcropped)
             scoreLayout.addView(heartImage)
+            heartImage.layoutParams.width = 80
+            val params: LinearLayout.LayoutParams =
+                heartImage.getLayoutParams() as LinearLayout.LayoutParams
+            params.gravity = Gravity.CENTER
+            heartImage.layoutParams = params
         }
     }
 
@@ -90,10 +95,11 @@ class QuestionsFragment : Fragment() {
             imageLine.setImageResource(R.drawable.lines)
             lineContainer.addView(imageLine)
             imageLine.tag = words.indexOf(word)
+            imageLine.id = words.indexOf(word)
             lines.addView(lineContainer)
             listOfLinesImageView.add(lineContainer)
             val relativeParams = lineContainer.layoutParams as LinearLayout.LayoutParams
-            relativeParams.setMargins(10, 5, 10, 5)// left, top, right, bottom
+            relativeParams.setMargins(10, 0, 10, 0)// left, top, right, bottom
             lineContainer.layoutParams = relativeParams
         }
     }
@@ -123,7 +129,12 @@ class QuestionsFragment : Fragment() {
                         if (view.parent != null) {
                             (view.parent as ViewGroup).removeView(view)
                         }
+
                         listOfLinesImageView[i].addView(view)
+                        val params: RelativeLayout.LayoutParams =
+                            view.getLayoutParams() as RelativeLayout.LayoutParams
+                        params.setMargins(0,-50,40,0)
+                        view.layoutParams = params
                         view.setBackgroundResource(0)
                         checkResult()
                         break
@@ -164,7 +175,11 @@ class QuestionsFragment : Fragment() {
         val heartImage = ImageView(requireContext())
         heartImage.setImageResource(R.drawable.heartcropped)
         scoreLayout.addView(heartImage)
-
+        heartImage.layoutParams.width = 80
+        val params: LinearLayout.LayoutParams =
+            heartImage.getLayoutParams() as LinearLayout.LayoutParams
+        params.gravity = Gravity.CENTER
+        heartImage.layoutParams = params
     }
 
     private fun checkResult() {

@@ -60,6 +60,11 @@ class QuestionThreeFragment : Fragment() {
             val heartImage = ImageView(requireContext())
             heartImage.setImageResource(R.drawable.heartcropped)
             scoreLayout.addView(heartImage)
+            heartImage.layoutParams.width = 80
+            val params: LinearLayout.LayoutParams =
+                heartImage.getLayoutParams() as LinearLayout.LayoutParams
+            params.gravity = Gravity.CENTER
+            heartImage.layoutParams = params
         }
     }
 
@@ -67,6 +72,11 @@ class QuestionThreeFragment : Fragment() {
         val heartImage = ImageView(requireContext())
         heartImage.setImageResource(R.drawable.heartcropped)
         scoreLayout.addView(heartImage)
+        heartImage.layoutParams.width = 80
+        val params: LinearLayout.LayoutParams =
+            heartImage.getLayoutParams() as LinearLayout.LayoutParams
+        params.gravity = Gravity.CENTER
+        heartImage.layoutParams = params
 
     }
 
