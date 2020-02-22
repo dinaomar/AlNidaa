@@ -74,7 +74,7 @@ class QuestionsFragment : Fragment() {
         val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionOne)
         listOfLinesImageView = ArrayList()
         listOfTextViews = ArrayList()
-        (0 until words.size/2).forEach { i:Int ->
+        (0 until words.size / 2).forEach { i: Int ->
             // words layout
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
@@ -103,7 +103,7 @@ class QuestionsFragment : Fragment() {
             lineContainer.layoutParams = relativeParams
         }
 
-        (words.size/2 until words.size).forEach { i:Int ->
+        (words.size / 2 until words.size).forEach { i: Int ->
             // words layout
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
@@ -164,7 +164,7 @@ class QuestionsFragment : Fragment() {
                         listOfLinesImageView[i].addView(view)
                         val params: RelativeLayout.LayoutParams =
                             view.getLayoutParams() as RelativeLayout.LayoutParams
-                        params.setMargins(0,-50,40,0)
+                        params.setMargins(0, -50, 0, 0)
                         view.layoutParams = params
                         view.setBackgroundResource(0)
                         checkResult()
@@ -226,6 +226,7 @@ class QuestionsFragment : Fragment() {
             }
         }
         if (counter == 0) {
+            // fancy toast
             if (score == listOfTextViews.size) {
                 // all words placed correct
                 TastyToast.makeText(
@@ -235,9 +236,17 @@ class QuestionsFragment : Fragment() {
                     TastyToast.SUCCESS
                 )
                 correctSentence = true
-                // remove dashes
-                for (child: RelativeLayout in listOfLinesImageView) {
-                    child[0].visibility = View.GONE
+                // remove dashes and write the full sentence
+                lines.removeAllViews()
+                lines2.removeAllViews()
+                wordsLayout.removeAllViews()
+                wordsLayout2.removeAllViews()
+                for (child: TextView in listOfTextViews) {
+                    if (child.parent != null) {
+                        (child.parent as ViewGroup).removeView(child)
+                    }
+                    lines.addView(child)
+                    child.textSize = 20f
                 }
                 // play clap sound
                 val mp: MediaPlayer = MediaPlayer.create(
@@ -245,6 +254,7 @@ class QuestionsFragment : Fragment() {
                     R.raw.applause10
                 )
                 mp.start()
+
                 // show sentence type
                 sentenceType.visibility = View.VISIBLE
                 val animation1 = AlphaAnimation(0.0f, 1.0f)

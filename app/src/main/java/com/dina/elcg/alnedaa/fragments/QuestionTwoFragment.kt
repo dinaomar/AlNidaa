@@ -98,7 +98,7 @@ class QuestionTwoFragment : Fragment() {
             lines.addView(lineContainer)
             listOfLinesImageView.add(lineContainer)
             val relativeParams = lineContainer.layoutParams as LinearLayout.LayoutParams
-            relativeParams.setMargins(10, 0, 10, 0)// left, top, right, bottom
+            relativeParams.setMargins(20, 0, 20, 10)// left, top, right, bottom
             lineContainer.layoutParams = relativeParams
         }
 
@@ -159,7 +159,12 @@ class QuestionTwoFragment : Fragment() {
                         if (view.parent != null) {
                             (view.parent as ViewGroup).removeView(view)
                         }
+
                         listOfLinesImageView[i].addView(view)
+                        val params: RelativeLayout.LayoutParams =
+                            view.getLayoutParams() as RelativeLayout.LayoutParams
+                        params.setMargins(0, -50, 0, 0)
+                        view.layoutParams = params
                         view.setBackgroundResource(0)
                         checkResult()
                         break
@@ -170,14 +175,14 @@ class QuestionTwoFragment : Fragment() {
             cursorLayout.getGlobalVisibleRect(rect1)
             close.getGlobalVisibleRect(rect2)
             if (rect1.intersect(rect2)) {
-                away.setTextColor(Color.GREEN)
-                close.setTextColor(Color.parseColor("#E6BF24"))
+                close.setTextColor(Color.GREEN)
+                away.setTextColor(Color.parseColor("#E6BF24"))
             }
             cursorLayout.getGlobalVisibleRect(rect1)
             away.getGlobalVisibleRect(rect2)
             if (rect1.intersect(rect2)) {
-                close.setTextColor(Color.RED)
-                away.setTextColor(Color.parseColor("#E6BF24"))
+                away.setTextColor(Color.GREEN)
+                close.setTextColor(Color.parseColor("#E6BF24"))
                 navigateToQuestionThree()
             }
         }
@@ -228,9 +233,17 @@ class QuestionTwoFragment : Fragment() {
                     TastyToast.SUCCESS
                 )
                 correctSentence = true
-                // remove dashes
-                for (child: RelativeLayout in listOfLinesImageView) {
-                    child[0].visibility = View.GONE
+                 // remove dashes and write the full sentence
+                lines.removeAllViews()
+                lines2.removeAllViews()
+                wordsLayout.removeAllViews()
+                wordsLayout2.removeAllViews()
+                for (child: TextView in listOfTextViews) {
+                    if (child.parent != null) {
+                        (child.parent as ViewGroup).removeView(child)
+                    }
+                    lines.addView(child)
+                    child.textSize = 20f
                 }
                 // play clap sound
                 val mp: MediaPlayer = MediaPlayer.create(

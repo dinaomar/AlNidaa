@@ -70,7 +70,7 @@ class QuestionSixFragment : Fragment() {
         val words: List<String> = Utilities.splitQuestion(QuestionsBank.questionSix)
         listOfLinesImageView = ArrayList()
         listOfTextViews = ArrayList()
-        (0 until words.size/2).forEach { i:Int ->
+        (0 until words.size / 2).forEach { i: Int ->
             // words layout
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
@@ -99,7 +99,7 @@ class QuestionSixFragment : Fragment() {
             lineContainer.layoutParams = relativeParams
         }
 
-        (words.size/2 until words.size).forEach { i:Int ->
+        (words.size / 2 until words.size).forEach { i: Int ->
             // words layout
             val wordContainer = RelativeLayout(requireContext())
             val wordText = TextView(requireContext())
@@ -156,7 +156,12 @@ class QuestionSixFragment : Fragment() {
                         if (view.parent != null) {
                             (view.parent as ViewGroup).removeView(view)
                         }
+
                         listOfLinesImageView[i].addView(view)
+                        val params: RelativeLayout.LayoutParams =
+                            view.getLayoutParams() as RelativeLayout.LayoutParams
+                        params.setMargins(0, -50, 0, 0)
+                        view.layoutParams = params
                         view.setBackgroundResource(0)
                         checkResult()
                         break
@@ -171,6 +176,9 @@ class QuestionSixFragment : Fragment() {
                 close.setTextColor(Color.GREEN)
                 away.setTextColor(Color.parseColor("#E6BF24"))
                 // show replay button
+                replay.visibility = View.VISIBLE
+                sentenceType.visibility = View.GONE
+                replay.setOnClickListener { replay() }
             }
             cursorLayout.getGlobalVisibleRect(rect1)
             away.getGlobalVisibleRect(rect2)
@@ -227,9 +235,17 @@ class QuestionSixFragment : Fragment() {
                     TastyToast.SUCCESS
                 )
                 correctSentence = true
-                // remove dashes
-                for (child: RelativeLayout in listOfLinesImageView) {
-                    child[0].visibility = View.GONE
+                // remove dashes and write the full sentence
+                lines.removeAllViews()
+                lines2.removeAllViews()
+                wordsLayout.removeAllViews()
+                wordsLayout2.removeAllViews()
+                for (child: TextView in listOfTextViews) {
+                    if (child.parent != null) {
+                        (child.parent as ViewGroup).removeView(child)
+                    }
+                    lines.addView(child)
+                    child.textSize = 20f
                 }
                 // play clap sound
                 val mp: MediaPlayer = MediaPlayer.create(
@@ -247,10 +263,6 @@ class QuestionSixFragment : Fragment() {
                 val heartImage = ImageView(requireContext())
                 heartImage.setImageResource(R.drawable.heartcropped)
                 scoreLayout.addView(heartImage)
-                replay.visibility = View.VISIBLE
-                replay.startAnimation(animation1)
-                replay.setOnClickListener { replay() }
-                viewModel.score.value = 6
                 drawLive()
 
             } else {
@@ -282,7 +294,7 @@ class QuestionSixFragment : Fragment() {
 
     companion object {
         @JvmStatic
-        fun newInstance() = QuestionFiveFragment()
+        fun newInstance() = QuestionSixFragment()
     }
 
 }

@@ -38,6 +38,7 @@ class MainActivity : AppCompatActivity() {
         mPlayerbackground = MediaPlayer.create(this, R.raw.musicbg)
         mPlayerbackground?.setVolume(0.1f, 0.1f)
         mPlayerbackground?.start()
+        mPlayerbackground?.isLooping = true
     }
 
     override fun onStop() {
